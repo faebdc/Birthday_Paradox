@@ -1,0 +1,138 @@
+% Modified based on Xiaoming Sun's template
+
+\documentclass{article}
+    \usepackage{amsmath,amsfonts,amsthm,amssymb}
+    \usepackage{setspace}
+    \usepackage{fancyhdr}
+    \usepackage{lastpage}
+    \usepackage{extramarks}
+    \usepackage{chngpage}
+    \usepackage{soul,color}
+    \usepackage{graphicx,float,wrapfig}
+    \usepackage{ifpdf}
+    \usepackage{geometry}
+
+\geometry{a4paper,scale=0.8}
+    
+    \ifpdf
+      \usepackage[pdftex,bookmarks,bookmarksopen,bookmarksdepth=3]{hyperref}
+    \else
+      \usepackage[pagebackref]{hyperref}  
+    \fi
+    
+    % In case you need to adjust margins:
+    % \topmargin=-0.45in      %
+    % \evensidemargin=0in     %
+    % \oddsidemargin=0in      %
+    % \textwidth=6.5in        %
+    % \textheight=9.0in       %
+    % \headsep=0.25in         %
+    
+    % Setup the header and footer
+    % \pagestyle{fancy}                                                       %
+    % \chead{\Title}  %
+    % \rhead{\firstxmark}                                                     %
+    % \lfoot{\lastxmark}                                                      %
+    % \cfoot{}                                                                %
+    % \rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}}                          %
+    % \renewcommand\headrulewidth{0.4pt}                                      %
+    % \renewcommand\footrulewidth{0.4pt}                                      %
+    
+    % 可以自定义一些命令
+    \newcommand{\Answer}{\ \\\textbf{Answer:} }
+    \newcommand{\Acknowledgement}[1]{\ \\{\bf Acknowledgement:} #1}
+    
+    \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % 标题部分
+    \title{\textmd{\bf Cryptography: Birthday Paradox}}
+    \date{}
+    \author{Yiheng Lin, Zhihao Jiang}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \begin{document}
+    \begin{spacing}{1.1}
+    \maketitle %\thispagestyle{empty}
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Begin edit from here
+    
+    \section*{1}
+    \subsection*{1}
+    Theorem 1.1. Let $S = \{1, 2, \cdots, N\}$. For n times, uniformly randomly draw one element from set S. Let $x_t$ be the element we draw at time t. Then $\forall p > 0$, there exists a constant $C_1$ such that when $n \geq C_1 \sqrt{N}$, we have
+    $$Pr[\exists 1\leq i, j \leq n, i\not = j \text{ such that } x_i = x_j] > p$$.
+    \begin{proof}
+        Let X denote the event that $\exists i, j \leq t, i\not = j \text{ such that } x_i = x_j$, then we have
+        \begin{equation}
+            \begin{aligned}
+                Pr[\bar{X}] &= \frac{N(N-1)\cdots (N-n+1)}{N^n}\\
+                &= \prod_{i=1}^{n-1}(1 - \frac{i}{N})\\
+                &\leq \prod_{i=1}^{n-1} exp(-\frac{i}{N})\\
+                &= exp(-\frac{n(n-1)}{2N})
+            \end{aligned}
+        \end{equation}
+        Let $C_1 = \sqrt{-2ln(1 - p)} + 1$. Then when $n \geq C_1\sqrt{N}$, we have
+        \begin{equation}
+            \begin{aligned}
+                n(n-1) > (1 + \sqrt{-2ln(1 - p)\cdot N})(\sqrt{-2ln(1 - p)\cdot N}) > 2ln(2)\cdot N
+            \end{aligned}
+        \end{equation}
+        Which is equivalent to $-\frac{n(n-1)}{2N} < ln(1 - p)$.
+        Thus use (1) we have
+        $$Pr[\bar{X}] \leq exp(-\frac{n(n-1)}{2N}) < 1 - p$$
+        So we have
+        $$Pr[X] > p$$
+    \end{proof}
+    \subsection*{2}
+    Lemma 1.1. For positive integer $n < N$, we have
+    $$\sum_{i=1}^{n-1}ln(1 - \frac{i}{N}) >-\frac{n^2}{N}$$
+    \begin{proof}
+        Notice that $\forall x\in [1 -\frac{i+1}{N}, 1 - \frac{i}{N}]$ $(0\leq i\leq n)$, we have $ln(x) < ln(1 - \frac{i}{N})$. Thus
+        $$\frac{1}{N}ln(1 - \frac{i}{N}) \geq \int_{1 - \frac{i+1}{N}}^{1 - \frac{i}{N}}ln(x)dx$$
+        Thus we have
+        \begin{equation}
+            \begin{aligned}
+                \frac{1}{N}\sum_{i=1}^{n-1}ln(1 - \frac{i}{N}) &\geq \int_{1-\frac{n}{N}}^1 ln(x)dx\\
+                &= (xln(x) - x)|_{1-\frac{n}{N}}^1\\
+                &= -\frac{n}{N} - (1 - \frac{n}{N})ln(1 - \frac{n}{N})\\
+                &> -\frac{n}{N} - (1 - \frac{n}{N})(-\frac{n}{N})\\
+                &= - \frac{n^2}{N^2}
+            \end{aligned}
+        \end{equation}
+        Thus
+        $$\sum_{i=1}^{n-1}ln(1 - \frac{i}{N}) > -\frac{n^2}{N}$$
+    \end{proof}
+    Theorem 1.2. Let $S = \{1, 2, \cdots, N\}$. For n times, uniformly randomly draw one element from set S. Let $x_t$ be the element we draw at time t. Then $\forall p > 0$, there exists a constant $C_2$ such that when $n \leq C_2 \sqrt{N}$, we have
+    $$Pr[\exists 1\leq i, j \leq n, i\not = j \text{ such that } x_i = x_j] < p$$.
+    \begin{proof}
+        Let X denote the event that $\exists i, j \leq t, i\not = j \text{ such that } x_i = x_j$.
+
+        Use Lemma 1.1, we have
+        \begin{equation}
+            \begin{aligned}
+                Pr[\bar{X}] &= \frac{N(N-1)\cdots (N-n+1)}{N^n}\\
+                &= \prod_{i=1}^{n-1}(1 - \frac{i}{N})\\
+                &= exp(\sum_{i=1}^{n-1}ln(1 - \frac{i}{N}))\\
+                &> exp(-\frac{n^2}{N})
+            \end{aligned}
+        \end{equation}
+        Let $C_2 = \sqrt{-ln(1-p)}$. Then when $n \leq C_2\sqrt{N}$, we have
+        $$exp(-\frac{n^2}{N}) \geq 1 - p$$
+        So $Pr[\bar{X}] > 1 - p$, thus
+        $$Pr[X] < p$$
+    \end{proof}
+    \Acknowledgement{}
+    
+    % End edit to here
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \end{spacing}
+    \end{document}
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
