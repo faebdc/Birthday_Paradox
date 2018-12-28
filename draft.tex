@@ -13,13 +13,13 @@
     \usepackage{geometry}
 
 \geometry{a4paper,scale=0.8}
-    
+
     \ifpdf
       \usepackage[pdftex,bookmarks,bookmarksopen,bookmarksdepth=3]{hyperref}
     \else
-      \usepackage[pagebackref]{hyperref}  
+      \usepackage[pagebackref]{hyperref}
     \fi
-    
+
     % In case you need to adjust margins:
     % \topmargin=-0.45in      %
     % \evensidemargin=0in     %
@@ -27,7 +27,7 @@
     % \textwidth=6.5in        %
     % \textheight=9.0in       %
     % \headsep=0.25in         %
-    
+
     % Setup the header and footer
     % \pagestyle{fancy}                                                       %
     % \chead{\Title}  %
@@ -37,33 +37,34 @@
     % \rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}}                          %
     % \renewcommand\headrulewidth{0.4pt}                                      %
     % \renewcommand\footrulewidth{0.4pt}                                      %
-    
-    % å¯ä»¥è‡ªå®šä¹‰ä¸€äº›å‘½ä»¤
+
+    % ¿ÉÒÔ×Ô¶¨ÒåÒ»Ð©ÃüÁî
     \newcommand{\Answer}{\ \\\textbf{Answer:} }
     \newcommand{\Acknowledgement}[1]{\ \\{\bf Acknowledgement:} #1}
-    
+    \newtheorem{theorem}{Theorem}
+
     \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
-    
-    
+
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
-    
+
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % æ ‡é¢˜éƒ¨åˆ†
+    % ±êÌâ²¿·Ö
     \title{\textmd{\bf Cryptography: Birthday Paradox}}
     \date{}
     \author{Yiheng Lin, Zhihao Jiang}
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
+
     \begin{document}
     \begin{spacing}{1.1}
     \maketitle %\thispagestyle{empty}
-    
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Begin edit from here
-    
-    \section*{1}
-    \subsection*{1}
+
+    \section{}
+    \subsection{}
     Theorem 1.1. Let $S = \{1, 2, \cdots, N\}$. For n times, uniformly randomly draw one element from set S with replacement. Let $x_t$ be the element we draw at time t. Then $\forall p > 0$, there exists a constant $C_1$ such that when $n \geq C_1 \sqrt{N}$, we have
     $$Pr[\exists 1\leq i, j \leq n, i\not = j \text{ such that } x_i = x_j] > p$$.
     \begin{proof}
@@ -88,7 +89,7 @@
         So we have
         $$Pr[X] > p$$
     \end{proof}
-    \subsection*{2}
+    \subsection{}
     Lemma 1.1. For positive integer $n < N$, we have
     $$\sum_{i=1}^{n-1}ln(1 - \frac{i}{N}) >-\frac{n^2}{N}$$
     \begin{proof}
@@ -126,7 +127,7 @@
         So $Pr[\bar{X}] > 1 - p$, thus
         $$Pr[X] < p$$
     \end{proof}
-    \section*{2}
+    \section{}
     Theorem 2.1. Let $S = \{1, 2, \cdots, N\}$. Let $D_1: S\to R^+\cup \{0\}$ be a discrete probability distribution over S. For n times, randomly draw one element from set S according to distribution $D_1$ with replacement . Let $x_t$ be the element we draw at time t. Let $D_0$ be the uniform distribution over S, which satisfies $\forall i \in S, D_0(i) = \frac{1}{N}$. Then we have
     $$Pr_{D_1^n}[\exists 1\leq i, j \leq n, i\not = j \text{ such that } x_i = x_j] \geq Pr_{D_0^n}[\exists 1\leq i, j \leq n, i\not = j \text{ such that } x_i = x_j]$$.
     \begin{proof}
@@ -156,7 +157,7 @@
         \end{equation}
         The last equation holds because $\forall i, Pr_{D^n}(X_1\cup X_2 | Y = i) = Pr_{D^n}(X_1\cup X_2 | Y = i, \bigcap_{k = 3}^N \bar{X_k})$.
 
-        Notice that 
+        Notice that
         \begin{equation}
             \begin{aligned}
                 &\quad Pr_{D_t^n}(X_1\cup X_2 | Y = 2) - Pr_{D_{t+1}^n}(X_1\cup X_2 | Y = 2)\\
@@ -181,13 +182,65 @@
         So consider equation (6) and we get
         $$Pr_{D_t^n}[X] \geq Pr_{D_{t+1}^n}[x]$$
     \end{proof}
-    \Acknowledgement{}
     
+    \section{}
+
+    \subsection{}
+
+    \begin{theorem}
+
+    Let $S = \{1, 2, \cdots, N\}$. For $n$ times, uniformly randomly draw one element from set $S$ with replacement. Let $x_t$ be the element we draw at time $t$. Then for all integer $d\geq 2$ and for all $p > 0$, there exists a constant $C_1$ such that when $n \geq C_1 {N}^{\frac{d-1}{d}}$, we have
+    $$Pr[X] > p,$$
+    where $X$ denotes the event $\exists 1\leq i_1< i_2<\dots<i_d \leq n, \text{ such that } x_{i_1} = x_{i_2}=\dots=x_{i_d}$.
+
+    \end{theorem}
+    
+    \begin{proof}
+    
+    We prove this theorem by induction. This theorem is right when $d=2$ which is proved before.
+    
+    The choice of $C_1$ is dependent of $p$ and $d$, we denote the constant as $C_1(p,d)$ in this proof.
+    
+    Now assume the theorem is right when $d=k-1$, and we prove the theorem is right when $d=k$.
+    
+    \textcolor{red}{Let $C_1^{k,p}=C_1^{k-1,\frac{1+p}{2}}+1$.}
+    
+    
+    
+    \end{proof}
+
+
+    \subsection{}
+
+    \begin{theorem}
+
+    Let $S = \{1, 2, \cdots, N\}$. For $n$ times, uniformly randomly draw one element from set $S$ with replacement. Let $x_t$ be the element we draw at time $t$. Then for all integer $d\geq 2$ and for all $p > 0$, there exists a constant $C_2$ such that when $n \leq C_2 {N}^{\frac{d-1}{d}}$, we have
+    $$Pr[X] < p,$$
+    where $X$ denotes the event $\exists 1\leq i_1< i_2<\dots<i_d \leq n, \text{ such that } x_{i_1} = x_{i_2}=\dots=x_{i_d}$.
+
+    \end{theorem}
+    
+    \begin{proof}
+    
+    Let $C_2=\sqrt[d]{p}$. We have
+    \begin{align*}
+    Pr[X]
+    &\leq \sum_{i_1=1}^{C_2n}\sum_{i_2=i_1+1}^{C_2n}\dots\sum_{i_d=i_{d-1}+1}^{C_2n}Pr[x_{i_1} = x_{i_2}=\dots=x_{i_d}]  \\
+    &=\sum_{i_1=1}^{C_2n}\sum_{i_2=i_1+1}^{C_2n}\dots\sum_{i_d=i_{d-1}+1}^{C_2n}\frac{1}{N^{d-1}}  \\
+    &<\frac{C_2^dn^d}{N^{d-1}}  \\
+    &=p.
+    \end{align*}
+    
+    \end{proof}
+    
+    
+    \Acknowledgement{}
+
     % End edit to here
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
+
     \end{spacing}
     \end{document}
-    
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
