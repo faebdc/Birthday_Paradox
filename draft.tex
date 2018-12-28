@@ -64,7 +64,7 @@
     
     \section*{1}
     \subsection*{1}
-    Theorem 1.1. Let $S = \{1, 2, \cdots, N\}$. For n times, uniformly randomly draw one element from set S. Let $x_t$ be the element we draw at time t. Then $\forall p > 0$, there exists a constant $C_1$ such that when $n \geq C_1 \sqrt{N}$, we have
+    Theorem 1.1. Let $S = \{1, 2, \cdots, N\}$. For n times, uniformly randomly draw one element from set S with replacement. Let $x_t$ be the element we draw at time t. Then $\forall p > 0$, there exists a constant $C_1$ such that when $n \geq C_1 \sqrt{N}$, we have
     $$Pr[\exists 1\leq i, j \leq n, i\not = j \text{ such that } x_i = x_j] > p$$.
     \begin{proof}
         Let X denote the event that $\exists i, j \leq t, i\not = j \text{ such that } x_i = x_j$, then we have
@@ -107,7 +107,7 @@
         Thus
         $$\sum_{i=1}^{n-1}ln(1 - \frac{i}{N}) > -\frac{n^2}{N}$$
     \end{proof}
-    Theorem 1.2. Let $S = \{1, 2, \cdots, N\}$. For n times, uniformly randomly draw one element from set S. Let $x_t$ be the element we draw at time t. Then $\forall p > 0$, there exists a constant $C_2$ such that when $n \leq C_2 \sqrt{N}$, we have
+    Theorem 1.2. Let $S = \{1, 2, \cdots, N\}$. For n times, uniformly randomly draw one element from set S with replacement. Let $x_t$ be the element we draw at time t. Then $\forall p > 0$, there exists a constant $C_2$ such that when $n \leq C_2 \sqrt{N}$, we have
     $$Pr[\exists 1\leq i, j \leq n, i\not = j \text{ such that } x_i = x_j] < p$$.
     \begin{proof}
         Let X denote the event that $\exists i, j \leq t, i\not = j \text{ such that } x_i = x_j$.
@@ -125,6 +125,61 @@
         $$exp(-\frac{n^2}{N}) \geq 1 - p$$
         So $Pr[\bar{X}] > 1 - p$, thus
         $$Pr[X] < p$$
+    \end{proof}
+    \section*{2}
+    Theorem 2.1. Let $S = \{1, 2, \cdots, N\}$. Let $D_1: S\to R^+\cup \{0\}$ be a discrete probability distribution over S. For n times, randomly draw one element from set S according to distribution $D_1$ with replacement . Let $x_t$ be the element we draw at time t. Let $D_0$ be the uniform distribution over S, which satisfies $\forall i \in S, D_0(i) = \frac{1}{N}$. Then we have
+    $$Pr_{D_1^n}[\exists 1\leq i, j \leq n, i\not = j \text{ such that } x_i = x_j] \geq Pr_{D_0^n}[\exists 1\leq i, j \leq n, i\not = j \text{ such that } x_i = x_j]$$.
+    \begin{proof}
+        Let X denote the event that $\exists i, j \leq t, i\not = j \text{ such that } x_i = x_j$. Let $X_m$ denote the event that $\exists 1\leq i, j \leq n, i\not = j \text{ such that } x_i = x_j = m$.
+
+        First, to change $D_1$ to $D_0$, we can apply the following algorithm:
+        \begin{enumerate}
+            \item $t := 1$
+            \item While $D_t \not = D_0$:
+            \item $\quad$find $i, j \in S$ such that $D_t[i] < \frac{1}{N} < D_t[j]$
+            \item $\quad$let $D_{t+1}[j] := D_t[i] + D_t[j] - \frac{1}{N}, D_{t+1}[i] := \frac{1}{N}, \forall k \not = i, j, D_{t+1}[k] := D_t[k]$
+            \item $\quad t++$
+            \item End While
+        \end{enumerate}
+        Since the number of $\frac{1}{N}$ in D increases at each iteration, this algorithm will terminate in N steps.
+
+        We only need to prove that $$\forall t, Pr_{D_t^n}[X] \geq Pr_{D_{t+1}^n}[x]$$
+
+        Without losing generality, suppose when generate $D_{t+1}$ from $D_t$, we choose $i = 1, j = 2$.
+
+        Let $Y$ be the number of times that the element we draw is in $\{1, 2\}$.
+        \begin{equation}
+            \begin{aligned}
+                Pr_{D^n}[X] &= Pr_{D^n}[\bigcup_{k = 3}^N X_k] + (1 - Pr_{D^n}[\bigcup_{k = 3}^N X_k])Pr_{D^n}(X_1\cup X_2 | \bigcap_{k = 3}^N \bar{X_k})\\
+                &= Pr_{D^n}[\bigcup_{k = 3}^N X_k] + (1 - Pr_{D^n}[\bigcup_{k = 3}^N X_k])\sum_{i=0}^\infty Pr_{D^n}(Y = i | \bigcap_{k = 3}^N \bar{X_k}) Pr_{D^n}(X_1\cup X_2 | Y = i)
+            \end{aligned}
+        \end{equation}
+        The last equation holds because $\forall i, Pr_{D^n}(X_1\cup X_2 | Y = i) = Pr_{D^n}(X_1\cup X_2 | Y = i, \bigcap_{k = 3}^N \bar{X_k})$.
+
+        Notice that 
+        \begin{equation}
+            \begin{aligned}
+                &\quad Pr_{D_t^n}(X_1\cup X_2 | Y = 2) - Pr_{D_{t+1}^n}(X_1\cup X_2 | Y = 2)\\
+                &= \frac{1}{(D_t[1] + D_t[2])^2}(D_t[1]^2 + D_t[2]^2 - (\frac{1}{N})^2 - (D_t[1] + D_t[2] - \frac{1}{N})^2)\\
+                &= -\frac{2}{(D_t[1] + D_t[2])^2}(D_t[1] - \frac{1}{N})(D_t[2] - \frac{1}{N})\\
+                &> 0
+            \end{aligned}
+        \end{equation}
+        And for any distribution D over S we have
+        \begin{equation}
+            Pr_{D^n}(X_1\cup X_2 | Y = i) =
+            \begin{cases}
+                0 & i = 0, 1\\
+                1 & i \geq 3
+            \end{cases}
+        \end{equation}
+        Thus
+        $$\forall i, Pr_{D_t^n}(X_1\cup X_2 | Y = i) \geq Pr_{D_{t+1}^n}(X_1\cup X_2 | Y = i)$$
+        Since we only adjust $D_t[0], D_t[1]$,
+        $$Pr_{D_t^n}[\bigcup_{k = 3}^N X_k] = Pr_{D_{t+1}^n}[\bigcup_{k = 3}^N X_k]$$
+        $$\forall i, Pr_{D_t^n}(Y = i | \bigcap_{k = 3}^N \bar{X_k}) = Pr_{D_{t+1}^n}(Y = i | \bigcap_{k = 3}^N \bar{X_k})$$
+        So consider equation (6) and we get
+        $$Pr_{D_t^n}[X] \geq Pr_{D_{t+1}^n}[x]$$
     \end{proof}
     \Acknowledgement{}
     
