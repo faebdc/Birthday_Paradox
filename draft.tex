@@ -38,7 +38,7 @@
     % \renewcommand\headrulewidth{0.4pt}                                      %
     % \renewcommand\footrulewidth{0.4pt}                                      %
 
-    % ¿ÉÒÔ×Ô¶¨ÒåÒ»Ð©ÃüÁî
+    % ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½
     \newcommand{\Answer}{\ \\\textbf{Answer:} }
     \newcommand{\Acknowledgement}[1]{\ \\{\bf Acknowledgement:} #1}
     \newtheorem{theorem}{Theorem}
@@ -50,7 +50,7 @@
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % ±êÌâ²¿·Ö
+    % ï¿½ï¿½ï¿½â²¿ï¿½ï¿½
     \title{\textmd{\bf Cryptography: Birthday Paradox}}
     \date{}
     \author{Yiheng Lin, Zhihao Jiang}
@@ -203,10 +203,61 @@
     
     Now assume the theorem is right when $d=k-1$, and we prove the theorem is right when $d=k$.
     
-    \textcolor{red}{Let $C_1^{k,p}=C_1^{k-1,\frac{1+p}{2}}+1$.}
+    By induction, $\forall p$, we can find a constant $C_1$ such that
+    $$Pr[X] > \frac{1+p}{2}$$
+    for all N. Let $C_2$ be another constant such that $\frac{1+p}{2} \cdot (1 - (\frac{1}{e})^{C_2}) > p$ and $(1 - exp(-\frac{C_1 + C_2}{4})) > p$. We divide the whole drawing process into two steps:
+    \begin{enumerate}
+        \item First, draw $M_1 = C_1 \cdot N^{\frac{d-2}{d}} + C_2 \cdot N^{\frac{d-1}{d}}$ elements from S. Let set A be the set of all the elements that has been drawn for at least once.
+        \item Second, draw $M_2 = 2(C_1 + C_2)\cdot N^{\frac{d-1}{d}}$ elements from S. Let $Y$ be the number of times that an element is drawn from set A.
+    \end{enumerate}
+    Now we consider 2 possible cases of the size of A.
     
-    
-    
+    \subsubsection{First Case}
+    If $|A| \leq n^{\frac{d-1}{d}}$:
+
+    By assumption, after drawing for $C_1 \cdot N^{\frac{d-2}{d}}$ times, let event $E_1$ be that there exists an element $c_0$ in A that has been drawn for at least $d-1$ times, by assumption, given that $|A| \leq n^{\frac{d-1}{d}}$, we have $Pr(E_1) > \frac{p+1}{2}$.
+
+    Notice that given a fixed element c in A, the probability that $|A|$ random draws draw c for 0 times is $(1 - \frac{1}{|A|})^{|A|} < \frac{1}{e}$. So let the event $E_2$ be that the element $c_0$ has been drawn for at least once in the last $C_2 \cdot N^{\frac{d-1}{d}}$ draws. Then we have the conditional probability $P(E_2|E_1) > (1 - (\frac{1}{e})^{C_2})$.
+
+    If $E_1$ and $E_2$ both happens, then $c_0$ must be drawn for at least $(d-1) + 1 = d$ times. And the joint probability is
+    \begin{equation}
+        Pr(E_1, E_2) = Pr(E_1)\cdot Pr(E_2 | E_1) > \frac{p+1}{2} \cdot (1 - (\frac{1}{e})^{C_2}) > p
+    \end{equation}
+    Thus we have proved that $$Pr[X | |A| \leq N^{\frac{d-1}{d}}] > p$$ just after the first step.
+    \subsubsection{Second Case}
+    Else, we have $(C_1 + C_2)N^{\frac{d-1}{d}} > |A| > N^{\frac{d-1}{d}}$:
+
+    Now we try to bound the probability that $Y < (|A|)^{\frac{d-2}{d-1}}$ in step 2.
+
+    Let $X_i$ be the indicater random variable of whether the i th draw in step 2 draws an element in A. In other words,
+    \begin{equation}
+        X_i = \begin{cases}
+            1 & \text{if the i th draw draws an element from A} \\
+            0 & \text{otherwise}
+        \end{cases}
+    \end{equation}
+    Then we have $Y = \sum_{i=1}^{M_2}X_i$. And $X_i$s are i.i.d. Bornoulli random variables. So use Chernoff Bound
+    $$ Pr(X < (1 - \delta)\mu) \leq e^{-\frac{\delta^2 \mu}{2}}$$
+    We have
+    \begin{equation}
+        Pr[Y \leq \frac{1}{2}E[Y]] \leq e^{-\frac{E[Y]}{8}}
+    \end{equation}
+    Here 
+    $$E[Y] = \frac{|A|}{N} \cdot 2(C_1 + C_2)\cdot N^{\frac{d-1}{d}} \geq 2\cdot (|A|)^{\frac{d-2}{d-1}}$$
+    And
+    $$E[Y] = \frac{|A|}{N} \cdot 2(C_1 + C_2)\cdot N^{\frac{d-1}{d}} \geq 2\cdot (C_1 + C_2)\cdot N^{\frac{d-2}{d}}$$
+    Thus we have
+    $$Pr[Y > (|A|)^{\frac{d-2}{d-1}}] \geq 1 - exp(-\frac{(C_1 + C_2)\cdot N^{\frac{d-2}{d}}}{4}) \geq 1 - exp(-\frac{C_1 + C_2}{4})$$
+    Let the event $E_3$ be that there exists an elemnet $c_1$ in A such that $c_1$ has been drawn for at least $d-1$ times in step 2. By induction, we know in step 2, the conditional probability
+    $$Pr[E_3 | Y > (|A|)^{\frac{d-2}{d-1}}] > \frac{1+p}{2}$$
+    Thus we have
+    \begin{equation}
+        Pr[E_3] = Pr[E_3 | Y > (|A|)^{\frac{d-2}{d-1}}]\cdot Pr[Y > (|A|)^{\frac{d-2}{d-1}}] > \frac{p+1}{2}\cdot (1 - exp(-\frac{C_1 + C_2}{4})) > p
+    \end{equation}
+    Since the event $E_3$ gaurantees that $c_1$ has been drawn for at least d times (at least (d-1) in step 2, and at least 1 in step 1), we proved that
+    $$Pr[X | |A| > N^{\frac{d-1}{d}}] > p$$
+
+    Combining subsection 1 and subsection 2, we get $Pr[X] > p$ for $d = k$. Thus we have finished the proof by induction.
     \end{proof}
 
 
