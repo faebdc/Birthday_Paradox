@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1547716845 "/Users/yihenglin/Documents/git/Birthday_Paradox/draft.tex" "draft.pdf" "draft" 1547716845
-  "/Users/yihenglin/Documents/git/Birthday_Paradox/draft.tex" 1547716844 14767 4e7371ab70927041ada33c537f17f67f ""
+["pdflatex"] 1547722725 "/Users/yihenglin/Documents/git/Birthday_Paradox/draft.tex" "draft.pdf" "draft" 1547722726
+  "/Users/yihenglin/Documents/git/Birthday_Paradox/draft.tex" 1547722725 15022 5f48bbc2004989c2ccd8e8f86e7c0214 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1480098696 1536 06717a2b50de47d4087ac0e6cd759455 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
@@ -92,11 +92,11 @@
   "/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1523934492 2717033 f61a5287d9c22a39a74f1979fe3f905c ""
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1533824221 4220279 997ccdefd9f8834da022c5c40cb82cf7 ""
   "/usr/local/texlive/2018/texmf.cnf" 1523934483 577 0b39adfd7c93507ff20c9c14c2f1a33f ""
-  "draft.aux" 1547716845 1515 c1f7ddea80ef45213f95b14fa408d9d2 ""
-  "draft.out" 1547716845 431 08ab6331d5754a408aba721128071544 ""
-  "draft.tex" 1547716844 14767 4e7371ab70927041ada33c537f17f67f ""
+  "draft.aux" 1547722725 1515 c1f7ddea80ef45213f95b14fa408d9d2 ""
+  "draft.out" 1547722725 431 08ab6331d5754a408aba721128071544 ""
+  "draft.tex" 1547722725 15022 5f48bbc2004989c2ccd8e8f86e7c0214 ""
   (generated)
   "draft.out"
   "draft.aux"
-  "draft.pdf"
   "draft.log"
+  "draft.pdf"

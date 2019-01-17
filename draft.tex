@@ -80,7 +80,7 @@
         Let $C_1 = \sqrt{-2ln(1 - p)} + 1$. Then when $n \geq C_1\sqrt{N}$, we have
         \begin{equation}
             \begin{aligned}
-                n(n-1) > (1 + \sqrt{-2ln(1 - p)\cdot N})(\sqrt{-2ln(1 - p)\cdot N}) > 2ln(2)\cdot N
+                n(n-1) > (1 + \sqrt{-2ln(1 - p)\cdot N})(\sqrt{-2ln(1 - p)\cdot N}) > -2ln(1-p)\cdot N
             \end{aligned}
         \end{equation}
         Which is equivalent to $-\frac{n(n-1)}{2N} < ln(1 - p)$.
@@ -176,10 +176,10 @@
         \end{equation}
         Thus
         $$\forall i, Pr_{D_t^n}(X_1\cup X_2 | Y = i) \geq Pr_{D_{t+1}^n}(X_1\cup X_2 | Y = i)$$
-        Since we only adjust $D_t[0], D_t[1]$,
+        Since we only adjust $D_t[1], D_t[2]$,
         $$Pr_{D_t^n}[\bigcup_{k = 3}^N X_k] = Pr_{D_{t+1}^n}[\bigcup_{k = 3}^N X_k]$$
         $$\forall i, Pr_{D_t^n}(Y = i | \bigcap_{k = 3}^N \bar{X_k}) = Pr_{D_{t+1}^n}(Y = i | \bigcap_{k = 3}^N \bar{X_k})$$
-        So consider equation (6) and we get
+        So consider equation (5), (6) and we get
         $$Pr_{D_t^n}[X] \geq Pr_{D_{t+1}^n}[x]$$
     \end{proof}
     
@@ -203,7 +203,7 @@
     
     Now assume the theorem is right when $d=k-1$, and we prove the theorem is right when $d=k$.
     
-    By induction, $\forall p$, we can find a constant $C_1$ such that
+    By induction, $\forall p$, we can find a constant $C_1$ (to make it more convenient, we do not use notation $C_1(\frac{p+1}{2}, d)$ here, but make sure constants should be independent with N) such that
     $$Pr[X] > \frac{1+p}{2}$$
     for all N. Let $C_2$ be another constant such that $\frac{1+p}{2} \cdot (1 - (\frac{1}{e})^{C_2}) > p$ and $(1 - exp(-\frac{C_1 + C_2}{4})) > p$. We divide the whole drawing process into two steps:
     \begin{enumerate}
@@ -213,9 +213,9 @@
     Now we consider 2 possible cases of the size of A.
     
     \subsubsection{First Case}
-    If $|A| \leq n^{\frac{d-1}{d}}$:
+    If $|A| \leq N^{\frac{d-1}{d}}$:
 
-    By assumption, after drawing for $C_1 \cdot N^{\frac{d-2}{d}}$ times, let event $E_1$ be that there exists an element $c_0$ in A that has been drawn for at least $d-1$ times, by assumption, given that $|A| \leq n^{\frac{d-1}{d}}$, we have $Pr(E_1) > \frac{p+1}{2}$.
+    By assumption, after drawing for $C_1 \cdot N^{\frac{d-2}{d}}$ times, let event $E_1$ be that there exists an element $c_0$ in A that has been drawn for at least $d-1$ times, by assumption, given that $|A| \leq N^{\frac{d-1}{d}}$, we have $Pr(E_1) > \frac{p+1}{2}$.
 
     Notice that given a fixed element c in A, the probability that $|A|$ random draws draw c for 0 times is $(1 - \frac{1}{|A|})^{|A|} < \frac{1}{e}$. So let the event $E_2$ be that the element $c_0$ has been drawn for at least once in the last $C_2 \cdot N^{\frac{d-1}{d}}$ draws. Then we have the conditional probability $P(E_2|E_1) > (1 - (\frac{1}{e})^{C_2})$.
 
@@ -238,6 +238,7 @@
     \end{equation}
     Then we have $Y = \sum_{i=1}^{M_2}X_i$. And $X_i$s are i.i.d. Bornoulli random variables. So use Chernoff Bound
     $$ Pr(X < (1 - \delta)\mu) \leq e^{-\frac{\delta^2 \mu}{2}}$$
+    where $0\leq \delta \leq 1$, X is the sum of the random variables, $\mu$ is the expected value of the sum.
     We have
     \begin{equation}
         Pr[Y \leq \frac{1}{2}E[Y]] \leq e^{-\frac{E[Y]}{8}}
