@@ -63,7 +63,7 @@
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Begin edit from here
     
-    \section{Introduction and Outline}
+    \section*{Introduction and Outline}
     In this project, we study the Birthday Paradox, in which we uniformly randomly draw n elements with replacement from a set of N elements. The primary goal is to prove a bound of n to promise a collision (some element is drawn for at least 2 times) with some constant probability p. The result is n should be at least $\theta(N^{\frac{1}{2}})$ and we proved this bound cannot be improved. We study this in the first part.
 
     In the second part, we prove that if the probability of drawing each one of the N elements is not uniformly $\frac{1}{N}$, the probability that a collision occurs is greater or equal to the probability under the uniform case. This provide a plausible reason on why we should use hash functions that have uniform probability and how we can attack them.
@@ -291,7 +291,12 @@
 
     \end{proof}
 
+    \section*{Future Research}
+    A shortage of our work is that we did not impose tight bound on the constant $C_1$ and $C_2$ as a function of p and d. In another word, the function $C_1(p, d)$ could be exponential with respect to parameters $p$ and $d$. Professor Wu mentioned that another group (Chi Han et al.) has considered this issue carefully by deriving a recursive relationship on function $p(n, d)$ (express the probability of d-time collision as a function of n and d). Their result is promising and we will discuss with them in the future.
 
+    Another thing Professor Wu asked us to consider is study when non-uniform probability will occur in common hash functions.
+
+    Actually, this may happen when the input data itself has some special properties. For example, we know the multi-way cache in computer uses a part of digits in the physical addresses as index. The designer choose the middle part of the address (between tag and page offset) because they think this part usually has good randomness. But if a program accidently access addresses which have the same middle part, the randomness will be broken and the miss rate increases dramatically.
     \Acknowledgement{}
 
     % End edit to here
