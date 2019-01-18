@@ -62,7 +62,13 @@
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Begin edit from here
+    
+    \section{Introduction and Outline}
+    In this project, we study the Birthday Paradox, in which we uniformly randomly draw n elements with replacement from a set of N elements. The primary goal is to prove a bound of n to promise a collision (some element is drawn for at least 2 times) with some constant probability p. The result is n should be at least $\theta(N^{\frac{1}{2}})$ and we proved this bound cannot be improved. We study this in the first part.
 
+    In the second part, we prove that if the probability of drawing each one of the N elements is not uniformly $\frac{1}{N}$, the probability that a collision occurs is greater or equal to the probability under the uniform case. This provide a plausible reason on why we should use hash functions that have uniform probability and how we can attack them.
+    
+    Then we study the bound of n to promise a d-time collision (some element is drawn for at least d times) with some probability p. The result is n should be at least $\theta(N^{\frac{d-1}{d}})$ and we proved this bound cannot be improved.
     \section{}
     \subsection{}
     Theorem 1.1. Let $S = \{1, 2, \cdots, N\}$. For n times, uniformly randomly draw one element from set S with replacement. Let $x_t$ be the element we draw at time t. Then $\forall p > 0$, there exists a constant $C_1$ such that when $n \geq C_1 \sqrt{N}$, we have
