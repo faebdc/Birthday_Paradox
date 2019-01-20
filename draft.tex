@@ -291,13 +291,20 @@
 
     \end{proof}
 
-    \section*{Future Research}
+    \section{Future Research}
     A shortage of our work is that we did not impose tight bound on the constant $C_1$ and $C_2$ as a function of p and d. In another word, the function $C_1(p, d)$ could be exponential with respect to parameters $p$ and $d$. Professor Wu mentioned that another group (Chi Han et al.) has considered this issue carefully by deriving a recursive relationship on function $p(n, d)$ (express the probability of d-time collision as a function of n and d). Their result is promising and we will discuss with them in the future.
 
     Another thing Professor Wu asked us to consider is study when non-uniform probability will occur in common hash functions.
 
     Actually, this may happen when the input data itself has some special properties. For example, we know the multi-way cache in computer uses a part of digits in the physical addresses as index. The designer choose the middle part of the address (between tag and page offset) because they think this part usually has good randomness. But if a program accidently access addresses which have the same middle part, the randomness will be broken and the miss rate increases dramatically.
-    \Acknowledgement{}
+
+    And the differential attack can be viewed as using non-uniform probability distribution in hash function. Over uniform distribution of difference of plaintexts, the distribution of ciphertexts (or hash values) is not uniform. Some difference of ciphertexts (or hash values) may happen more frequently than others. The differential attack can utilize this property.
+    \section*{Reference}
+    \begin{itemize}
+        \item Concrete Mathematics: A Foundation for Computer Science, Ronald Graham, Donald Knuth, and Oren Patashnik, 1989
+        \item A First Course in Proability, Sheldon M. Ros
+        \item Understanding Cryptography, Christof Paar · Jan Pelzl
+    \end{itemize}
 
     % End edit to here
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
